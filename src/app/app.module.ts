@@ -8,6 +8,9 @@ import {DirectivaComponent} from './components/directiva/directiva.component';
 import {ClientesComponent} from './components/clientes/clientes.component';
 import {ClienteService} from './services/cliente.service';
 import {APP_ROUTING} from './app.routes';
+import {HttpClientModule} from '@angular/common/http';
+import {FormComponent} from './components/clientes/form.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,11 +18,14 @@ import {APP_ROUTING} from './app.routes';
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
-    ClientesComponent
+    ClientesComponent,
+    FormComponent
   ],
   imports: [
     APP_ROUTING,
-    BrowserModule
+    HttpClientModule,
+    BrowserModule,
+    FormsModule
   ],
   providers: [
     ClienteService
