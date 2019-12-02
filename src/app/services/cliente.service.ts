@@ -39,7 +39,7 @@ export class ClienteService {
   }
 
   create(cliente: Cliente): Observable<any> {
-    return this.httpClient.post(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
+    return this.httpClient.post<any>(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
@@ -48,8 +48,39 @@ export class ClienteService {
           'Error al crear cliente',
           err.error.mensaje,
           'error'
-        )
+        );
         console.log(err.error.mensaje);
+        return throwError(err);
+      })
+    );
+  }
+
+  update(cliente: Cliente): Observable<any> {
+    return this.httpClient.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
+      catchError(err => {
+        if (err.status == 400) {
+          return throwError(err);
+        }
+        console.log(err.error.mensaje);
+        swall.fire(
+          'error al actualizar cliente',
+          err.error.mensaje,
+          'error'
+        );
+        return throwError(err);
+      })
+    );
+  }
+
+  delete(id): Observable<Cliente> {
+    return this.httpClient.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
+      catchError(err => {
+        console.log(err.error.mensaje);
+        swall.fire(
+          'error al eliminar cliente',
+          err.error.mensaje,
+          'error'
+        );
         return throwError(err);
       })
     );

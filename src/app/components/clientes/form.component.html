@@ -58,7 +58,9 @@
                   [disabled]="!clienteForm.form.valid" (click)="create()">Crear
           </button>
           <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" [disabled]="!clienteForm.form.valid">Editar</button>
+            <button class="btn btn-primary" role="button" (click)="update()" [disabled]="!clienteForm.form.valid">
+              Editar
+            </button>
           </ng-template>
         </div>
       </div>

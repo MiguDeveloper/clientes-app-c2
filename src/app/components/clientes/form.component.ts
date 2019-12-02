@@ -51,4 +51,21 @@ export class FormComponent implements OnInit {
       }
     );
   }
+
+  update(): void {
+    this.clienteService.update(this.cliente).subscribe(json => {
+        this.router.navigate(['/clientes']);
+        swall.fire(
+          'Cliente actualizado',
+          `${json.mensaje}: ${json.cliente.nombre}`,
+          'success'
+        );
+      },
+      err => {
+        this.errores = err.error.errors as string[];
+        console.log('Codigo de error desde el backend: ' + err.status);
+        console.log(err.error.errors);
+      }
+    );
+  }
 }
