@@ -5,14 +5,17 @@
 <div class="card bg-light">
   <div class="card-header">{{titulo}}</div>
   <div class="card-body">
+    <!-- generamos la variable para validar el formulario  -->
     <form #clienteForm="ngForm">
 
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
         <div class="col-sm-6">
           <input type="text" [(ngModel)]="cliente.nombre" #nombre="ngModel" class="form-control" name="nombre"
-                 id="nombre" placeholder="Nombre"><!-- required minlength="4" -->
+                 id="nombre" placeholder="Nombre"><!-- required minlength="4" #nombre: variable local para validar -->
+          <!-- dirty: validacion mientras se digita, touched: perdida de foco -->
           <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <!-- un div por cada validador: tanto para required y minlength -->
             <div *ngIf="nombre.errors.required">
               El nombre es requerido
             </div>

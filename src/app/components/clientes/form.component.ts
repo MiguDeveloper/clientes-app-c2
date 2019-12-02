@@ -40,10 +40,10 @@ export class FormComponent implements OnInit {
         this.router.navigate(['/clientes']);
         swall.fire(
           'Nuevo Cliente',
-          `${json.mensaje}: ${json.cliente.nombre} `,
+          `${json.mensaje}: ${json.cliente.nombre} creado con éxito`,
           'success'
         );
-      },
+      },// el segundo parametro del subscrube es el ERROR
       err => {
         this.errores = err.error.errors as string[];
         console.log('Codigo de error desde backend: ' + err.status);

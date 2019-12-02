@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Cliente} from '../components/clientes/cliente';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import swall from 'sweetalert2';
 
@@ -24,6 +24,13 @@ export class ClienteService {
 
     // Otra opcion es usar el operador MAP
     return this.httpClient.get(this.urlEndPoint).pipe(
+      tap(response => {
+        // El TAP nos permite realizar tareas sin afectar el flujo de datos
+        let clientes = response as Cliente[];
+        clientes.forEach(cliente => {
+          console.log('imprimiedo desde el bloque tap: ' + cliente.nombre)
+        })
+      })
       map(response => response as Cliente[])
     );
   }
@@ -31,6 +38,11 @@ export class ClienteService {
   getClienteById(id): Observable<Cliente> {
     return this.httpClient.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(err => {
+        swall.fire(
+          'Error al editar',
+          err.error.mensaje,
+          'error'
+        )
         this.router.navigate(['/clientes']);
         console.log(err.error.mensaje);
         return throwError(err);
@@ -41,15 +53,15 @@ export class ClienteService {
   create(cliente: Cliente): Observable<any> {
     return this.httpClient.post<any>(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
       catchError(err => {
-        if (err.status == 400) {
-          return throwError(err);
+        if (err.status == 400) {// Preguntamos si es un bad_request para manejarlo de manera distinta ya que contiene mas errores
+          return throwError(err);// como se trata de varios no podemos mandarlo al SWALL
         }
         swall.fire(
           'Error al crear cliente',
           err.error.mensaje,
           'error'
         );
-        console.log(err.error.mensaje);
+        console.error(err.error.mensaje);
         return throwError(err);
       })
     );
@@ -72,7 +84,7 @@ export class ClienteService {
     );
   }
 
-  delete(id): Observable<Cliente> {
+  delete(id: number): Observable<Cliente> {
     return this.httpClient.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
       catchError(err => {
         console.log(err.error.mensaje);
