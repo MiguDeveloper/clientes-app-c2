@@ -17,21 +17,20 @@ export class ClienteService {
   constructor(private httpClient: HttpClient, private router: Router) {
   }
 
-  getClientes(): Observable<Cliente[]> {
+  getClientes(page: number): Observable<any> {
     // Lo podemos hacer casteando la respuesta
     // return this.httpClient.get<Cliente[]>(this.urlEndPoint);
     // return of(CLIENTES);
 
     // Otra opcion es usar el operador MAP
-    return this.httpClient.get(this.urlEndPoint).pipe(
-      tap(response => {
+    return this.httpClient.get(this.urlEndPoint + '/page/' + page).pipe(
+      tap((response: any) => {
         // El TAP nos permite realizar tareas sin afectar el flujo de datos
-        let clientes = response as Cliente[];
-        clientes.forEach(cliente => {
-          console.log('imprimiedo desde el bloque tap: ' + cliente.nombre)
-        })
-      })
-      map(response => response as Cliente[])
+        (response.content as Cliente[]).forEach(cliente => {
+          console.log('imprimiedo desde el bloque tap: ' + cliente.nombre);
+        });
+      }),
+      map((response: any) => response)
     );
   }
 
@@ -42,7 +41,7 @@ export class ClienteService {
           'Error al editar',
           err.error.mensaje,
           'error'
-        )
+        );
         this.router.navigate(['/clientes']);
         console.log(err.error.mensaje);
         return throwError(err);
