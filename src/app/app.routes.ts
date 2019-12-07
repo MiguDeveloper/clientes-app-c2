@@ -3,6 +3,7 @@ import {AppComponent} from './app.component';
 import {ClientesComponent} from './components/clientes/clientes.component';
 import {DirectivaComponent} from './components/directiva/directiva.component';
 import {FormComponent} from './components/clientes/form.component';
+import {DetalleComponent} from './components/clientes/detalle/detalle.component';
 
 
 const APP_ROUTES: Routes = [
