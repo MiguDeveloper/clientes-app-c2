@@ -19,7 +19,20 @@
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
-        <li><a [routerLink]="['/login']" class="btn btn-outline-primary">Iniciar sesion</a></li>
+        <li *ngIf="!authService.isAuthenticated()"><a [routerLink]="['/login']" class="btn btn-outline-primary">Iniciar
+          sesion</a></li>
+
+        <li *ngIf="authService.isAuthenticated()" class="dropdown">
+          <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{authService.usuario.username}}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <button (click)="logout()" type="submit" class="dropdown-item">Cerrar sesion</button>
+          </div>
+        </li>
+
       </ul>
 
     </div>
