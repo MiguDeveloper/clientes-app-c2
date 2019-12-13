@@ -29,8 +29,18 @@ export class ClienteService {
 
   private isNoAutorizado(e): boolean {
 
-    if (e.status == 401 || e.status == 403) {
+    if (e.status == 401) {
+      // TOKEN EXIRADO: Este caso es cuando vence el token y manda un request y esta autenticado en el frontend
+      if (this.authService.isAuthenticated()) {
+        this.authService.logout();
+      }
       this.router.navigate(['/login']);
+      return true;
+    }
+
+    if (e.status == 403) {
+      swall.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
+      this.router.navigate(['/clientes']);
       return true;
     }
 
