@@ -8,17 +8,20 @@ import {DirectivaComponent} from './components/directiva/directiva.component';
 import {ClientesComponent} from './components/clientes/clientes.component';
 import {ClienteService} from './services/cliente.service';
 import {APP_ROUTING} from './app.routes';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormComponent} from './components/clientes/form.component';
 import {FormsModule} from '@angular/forms';
 import {registerLocaleData} from '@angular/common';
 import localeES from '@angular/common/locales/es';
-import { PaginatorComponent } from './components/paginator/paginator.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {PaginatorComponent} from './components/paginator/paginator.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import { DetalleComponent } from './components/clientes/detalle/detalle.component';
-import { LoginComponent } from './components/login/login.component';
+import {DetalleComponent} from './components/clientes/detalle/detalle.component';
+import {LoginComponent} from './components/login/login.component';
+import {TokenInterceptor} from './components/login/interceptors/token.interceptor';
+import {AuthInterceptor} from './components/login/interceptors/auth.interceptor';
+
 registerLocaleData(localeES, 'es');
 
 @NgModule({
@@ -44,7 +47,9 @@ registerLocaleData(localeES, 'es');
   ],
   providers: [
     ClienteService,
-    {provide: LOCALE_ID, useValue: 'es'}
+    {provide: LOCALE_ID, useValue: 'es'},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
