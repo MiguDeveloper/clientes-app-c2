@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       );
     }
 
-    console.log('antes del service');
+    console.log('logueando: antes del service');
 
     this.authService.login(this.usuario).subscribe(response => {
       console.log(response);

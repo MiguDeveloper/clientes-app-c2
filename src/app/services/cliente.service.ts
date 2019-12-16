@@ -44,7 +44,7 @@ export class ClienteService {
     }
 
     if (e.status == 403) {
-      swall.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
+      swall.fire('Acceso denegadon', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
       this.router.navigate(['/clientes']);
       return true;
     }
