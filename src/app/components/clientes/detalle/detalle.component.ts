@@ -5,6 +5,8 @@ import swall from 'sweetalert2';
 import {HttpEventType} from '@angular/common/http';
 import {ModalService} from '../../../services/detalle/modal.service';
 import {AuthService} from '../../../services/auth.service';
+import {FacturaService} from '../../../services/facturas/factura.service';
+import {Factura} from '../../facturas/models/factura';
 
 @Component({
   selector: 'app-detalle',
@@ -21,7 +23,8 @@ export class DetalleComponent implements OnInit {
 
   constructor(private clienteService: ClienteService,
               private modalService: ModalService,
-              private authService: AuthService) {
+              public authService: AuthService,
+              public facturaService: FacturaService) {
   }
 
   ngOnInit() {
@@ -71,5 +74,26 @@ export class DetalleComponent implements OnInit {
     this.modalService.cerrarModal();
     this.fotoSeleccionada = null;
     this.progreso = 0;
+  }
+
+  delete(factura: Factura): void{
+    swall.fire({
+      title: 'Estas seguro?',
+      text: `seguro que desea elminar la factura ${factura.id}`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.value) {
+        this.facturaService.delete(factura.id).subscribe(response => {
+           this.cliente.facturas = this.cliente.facturas.filter(fact => fact != factura);
+           swall.fire('Factura eliminado', `Factura ${factura.descripcion} eliminada con exito`, 'success');
+        });
+      }
+    });
+
   }
 }

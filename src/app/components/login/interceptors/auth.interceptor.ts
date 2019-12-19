@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (e.status == 403) {
           console.log('AuthInterceptor: sin permisos');
-          swall.fire('Acceso denegado fbef', `Hola  cns cns ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
+          swall.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning');
           this.router.navigate(['/clientes']);
         }
 

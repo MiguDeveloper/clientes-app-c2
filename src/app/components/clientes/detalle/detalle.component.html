@@ -43,6 +43,41 @@
                    alt="{{cliente.nombre}} {{cliente.apellido}}" class="img-thumbnail rounded">
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-sm-12" *ngIf="authService.hasRole('ROLE_ADMIN')">
+              <button [routerLink]="['/facturas/form/', cliente.id]" type="button" class="btn btn-success btn-sm">Crear factura</button>
+            </div>
+            <div class="col-sm-12">
+              <div *ngIf="cliente.facturas.length == 0" class="alert alert-info my-4">
+                No hay facturas asignadas al cliente {{cliente.nombre}} {{cliente.apellido}}
+              </div>
+
+              <table *ngIf="cliente.facturas.length > 0" class="table table-bordered table-striped my-4">
+                <thead>
+                <tr>
+                  <th>Folio</th>
+                  <th>Descripcion</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Detalle</th>
+                  <th *ngIf="authService.hasRole('ROLE_ADMIN')">Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let factura of cliente.facturas">
+                  <td>{{factura.id}}</td>
+                  <td>{{factura.descripcion}}</td>
+                  <td>{{factura.createAt}}</td>
+                  <td>{{factura.total}}</td>
+                  <td><button [routerLink]="['/facturas', factura.id]" type="button" class="btn btn-primary btn-sm">Ver</button></td>
+                  <td *ngIf="authService.hasRole('ROLE_ADMIN')"><button (click)="delete(factura)" type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

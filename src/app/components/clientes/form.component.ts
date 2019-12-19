@@ -11,7 +11,7 @@ import {Region} from './Region';
 })
 export class FormComponent implements OnInit {
 
-  private cliente: Cliente = new Cliente();
+  public cliente: Cliente = new Cliente();
   private titulo: string = 'Registrar Cliente';
   private errores: string[];
   private regiones: Region[];
@@ -56,6 +56,10 @@ export class FormComponent implements OnInit {
   }
 
   update(): void {
+    console.log(this.cliente);
+    // Para evitar el problema de la recursion en las relaciones del backend  seteamos a null las facturas ya que estamos
+    // actualizando el cliente y no sus facturas
+    this.cliente.facturas = null;
     this.clienteService.update(this.cliente).subscribe(json => {
         this.router.navigate(['/clientes']);
         swall.fire(
@@ -72,10 +76,10 @@ export class FormComponent implements OnInit {
     );
   }
 
-  compararRegion(o1: Region, o2: Region): boolean{
-    if (o1 === undefined && o2 === undefined){
+  compararRegion(o1: Region, o2: Region): boolean {
+    if (o1 === undefined && o2 === undefined) {
       return true;
     }
-     return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;
+    return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;
   }
 }

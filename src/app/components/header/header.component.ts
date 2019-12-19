@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   titulo: string = 'Miguel APP';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
