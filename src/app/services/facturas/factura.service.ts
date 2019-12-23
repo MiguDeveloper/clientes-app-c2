@@ -3,13 +3,16 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Factura} from '../../components/facturas/models/factura';
 import {Producto} from '../../components/facturas/models/producto';
+import {URL_BACKEND} from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacturaService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/facturas';
+  // Endpoint local: 'http://localhost:8080/api/facturas';
+  // Agregamos el URL hacia el app de heroku
+  private urlEndPoint: string = URL_BACKEND + '/api/facturas';
 
   constructor(private httpClient: HttpClient) {
   }

@@ -5,6 +5,7 @@ import swall from 'sweetalert2';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../services/detalle/modal.service';
 import {AuthService} from '../../services/auth.service';
+import {URL_BACKEND} from '../../config/config';
 
 @Component({
   selector: 'app-clientes',
@@ -15,6 +16,8 @@ export class ClientesComponent implements OnInit {
   clientes: Cliente[];
   paginador: any;
   clienteSeleccionado: Cliente;
+  // Creamos una variable para poder cargar las imagenes en la vista
+  urlBackend: String = URL_BACKEND;
 
   constructor(private clienteService: ClienteService,
               private activatedRoute: ActivatedRoute,

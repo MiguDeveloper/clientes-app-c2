@@ -5,6 +5,7 @@ import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Region} from '../components/clientes/Region';
+import {URL_BACKEND} from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ClienteService {
 
   // END POINT LOCAL: 'http://localhost:8080/api/clientes';
   // Lo modificacmos por el de Heroku
-  private urlEndPoint: string = 'http://localhost:8080/api/clientes';
+  private urlEndPoint: string = URL_BACKEND + '/api/clientes';
 
   // private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
