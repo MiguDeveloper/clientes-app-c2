@@ -11,6 +11,8 @@ import {Region} from '../components/clientes/Region';
 })
 export class ClienteService {
 
+  // END POINT LOCAL: 'http://localhost:8080/api/clientes';
+  // Lo modificacmos por el de Heroku
   private urlEndPoint: string = 'http://localhost:8080/api/clientes';
 
   // private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
