@@ -1,9 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
-import {AppComponent} from './app.component';
 import {ClientesComponent} from './components/clientes/clientes.component';
 import {DirectivaComponent} from './components/directiva/directiva.component';
 import {FormComponent} from './components/clientes/form.component';
-import {DetalleComponent} from './components/clientes/detalle/detalle.component';
 import {LoginComponent} from './components/login/login.component';
 import {AuthGuard} from './components/login/guards/auth.guard';
 import {RoleGuard} from './components/login/guards/role.guard';
